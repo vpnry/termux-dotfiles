@@ -1,6 +1,5 @@
 " Show line number
 set number
-
 " Show relative line number
 set relativenumber
 set autoindent
@@ -8,12 +7,38 @@ set shiftwidth=2
 set softtabstop=2
 set tabstop=2
 set smarttab
-syntax on
+
+syntax on " highlight syntax
+set hlsearch " high light Search
+set incsearch " show search results as you type
+
+
+inoremap jk <ESC> " type jk instead of ESC
+
+" Save close create a new tab file
+map fs <ESC>:w<cr>
+map fc <ESC>:wq<cr>
+map fq <ESC>:q!<cr>
+map fn <ESC>:tabnew<cr>
+
+"switch between tab 
+map <A-Right> gt 
+map <A-Left> gT 
+map tn :tabnew<cr>
+map tc :tabclose<cr>
+map <C-w> :tabclose<cr> 
+
+" Select a word in Visual mode, press Ctrl + r to find and replace
+" https://stackoverflow.com/a/676619
+" without confirm, <left><left> move 2 chars
+vnoremap <C-r> "hy:%s/<C-r>h//g<left><left>
+
+
+" Add sthing in font in visual mode
+vnoremap . :norm.<CR>
 
 " Spelling
 " set spell spelllang=en_gb
-
-inoremap jk <ESC> " type jk instead of ESC
 
 " ------------ NerdTree ------------
 " Toggle on/off NERDTree
