@@ -1,71 +1,109 @@
-" Show line number
-set number
-" Show relative line number
-set relativenumber
+syntax on " highlight syntax
+" set background=dark
+set number " Show line number
+
+" Spelling
+" set spell spelllang=en_gb
+set relativenumber " Show relative line number
+
 set autoindent
 set shiftwidth=2
 set softtabstop=2
 set tabstop=2
 set smarttab
 
-syntax on " highlight syntax
-set hlsearch " high light Search
-set incsearch " show search results as you type
-
-
-inoremap jk <ESC> " type jk instead of ESC
+" a few key mapping
+inoremap jk <ESC> " type jk = ESC
+let mapleader = ","
 
 " Save close create a new tab file
-map fs <ESC>:w<cr>
-map fc <ESC>:wq<cr>
-map fq <ESC>:q!<cr>
-map fn <ESC>:tabnew<cr>
+map fs <ESC>:w<cr> " save file
+map fc <ESC>:wq<cr> " save and quit
+map fq <ESC>:q!<cr> " not save and quit 
+map fn <ESC>:tabnew<cr> " new tab 
 
-"switch between tab 
+" ----- switch between tabs
 map <A-Right> gt 
 map <A-Left> gT 
 map tn :tabnew<cr>
 map tc :tabclose<cr>
 map <C-w> :tabclose<cr> 
+" ----- switch between tabs
 
-" Select a word in Visual mode, press Ctrl + r to find and replace
-" https://stackoverflow.com/a/676619
-" without confirm, <left><left> move 2 chars
+" ----- Find & replace -----
+" Use ripgrep for faster grep
+if executable("rg")
+set grepprg=rg\ --vimgrep 
+endif
+
+set ignorecase smartcase "search will be case-sensative if it contains Uppercase, require set ignorecase
+set hlsearch " high light Search
+set incsearch " show search results as you type
+" Select a word in Visual mode, press Ctrl + r to find and replace https://stackoverflow.com/a/676619
 vnoremap <C-r> "hy:%s/<C-r>h//g<left><left>
-
 
 " Add sthing in font in visual mode
 vnoremap . :norm.<CR>
 
-" Spelling
-" set spell spelllang=en_gb
+" ------------ far.vim find & replace
+set lazyredraw            " improve scrolling performance when navigating through large results
+set regexpengine=1        " use old regexp engine
+let g:far#enable_undo=1
+let g:far#auto_preview=0
+" Use Ripgrep to find candidate, requires ripgrep installed
+" let g:far#source='rg'
+" maximum amount of candidates. Default 1000
+let g:far#limit=999999999
+" let g:far#glob_mode='native'
+
+" Find only :Farf pattern **/*.py
+map ff :Farf<cr>
+" Find and Replace
+map fr :Farr<cr> 
+" Confirm replace action for Far.vim
+map fd :Fardo<cr>
+" shortcut for far.vim find
+nnoremap <silent> <A-f>  :Farf<cr>
+vnoremap <silent> <A-f>  :Farf<cr>
+" shortcut for far.vim replace
+nnoremap <silent> <A-r>  :Farr<cr>
+vnoremap <silent> <A-r>  :Farr<cr>
+" ------------ far.vim find & replace
+" ----- Find & replace -----
+
 
 " ------------ NerdTree ------------
-" Toggle on/off NERDTree
 " nnoremap <C-n> :NERDTreeToggle<CR>
-
 map <silent> <C-n> :NERDTreeToggle<CR>
 
-" Start NERDTree when Vim is started without file arguments.
-" This snippet is from https://github.com/preservim/nerdtree
-
+" Start NERDTree when Vim is started without file arguments. https://github.com/preservim/nerdtree
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists('s:std_in') | NERDTree | endif
 " ------------ NerdTree ------------
 
+
+" setlocal foldmethod=indent
+" Use UFO instead
+set nofoldenable
+
 call plug#begin(stdpath('data') . '/plugged')
 
-" Plug 'terroo/vim-auto-markdown'
+" Folding UFO
+Plug 'kevinhwang91/promise-async' " must loaded before nvim-ufo
+Plug 'kevinhwang91/nvim-ufo'
 
-" godlygeek/tabular must come before preservim/vim-markdown
-" Plug 'godlygeek/tabular' 
-" Plug 'preservim/vim-markdown'
+" Dracula theme 1:
+" Plug 'dracula/vim', { 'as': 'dracula' }
+" This Dracula theme is better, it supports more plugins:
+Plug 'Mofiqul/dracula.nvim'
 
+" Find and replace far.vim
+Plug 'brooth/far.vim'
+
+" vim-surround
 Plug 'https://github.com/tpope/vim-surround'
 Plug 'https://github.com/preservim/nerdtree' "NerdTree
 Plug 'https://github.com/tpope/vim-commentary' "For Commenting gcc & gc
-
-" Plug 'lervag/vimtex' " Does not work on Termux
 
 " From ------ https://github.com/hrsh7th/nvim-cmp
 Plug 'neovim/nvim-lspconfig'
@@ -81,50 +119,31 @@ Plug 'hrsh7th/nvim-cmp'
 " Plug 'brymer-meneses/grammar-guard.nvim'
 " Plug 'williamboman/nvim-lsp-installer'
 
-
-" DART
-" ----- https://x-team.com/blog/neovim-flutter/
-"Plug 'thosakwe/vim-flutter'
-"Plug 'dart-lang/dart-vim-plugin'
-"Plug 'natebosch/vim-lsc'
-"Plug 'natebosch/vim-lsc-dart'
-" ----- https://x-team.com/blog/neovim-flutter/
-
-
-" ----- Flutter
-" Plug 'nvim-lua/plenary.nvim'
-" Plug 'akinsho/flutter-tools.nvim'
-
-
-
 " Intro screen
 " Plug 'mhinz/vim-startify'
-
 
 " Python pep8
 Plug 'tell-k/vim-autopep8'
 
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'} " Treesitter-based highlighting
+" Treesitter-based highlighting, after installed, run :TSInstall language
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
 " Start ------ https://x-team.com/blog/neovim-javascript/amp/
 
-Plug 'neoclide/coc.nvim', {'branch': 'master', 'do': 'yarn install --frozen-lockfile'} " this is for auto complete, prettier and tslinting
+" Auto complete, prettier and tslinting
+Plug 'neoclide/coc.nvim', {'branch': 'master', 'do': 'yarn install --frozen-lockfile'}
 
-" let g:coc_global_extensions = ['coc-tslint-plugin', 'coc-tsserver', 'coc-css', 'coc-html', 'coc-json', 'coc-prettier', 'coc-pyright']  " list of CoC extensions needed
-
-let g:coc_global_extensions = ['coc-tslint-plugin', 'coc-tsserver', 'coc-css', 'coc-html', 'coc-json', 'coc-prettier']  " list of CoC extensions needed
+" list of CoC extensions needed
+let g:coc_global_extensions = ['coc-tslint-plugin', 'coc-tsserver', 'coc-css', 'coc-html', 'coc-json', 'coc-prettier']
 
 Plug 'jiangmiao/auto-pairs' "this will auto close ( [ {
 
-" these two plugins will add highlighting and indenting to JSX and TSX files.
-" Plug 'yuezk/vim-js'
-" Plug 'HerringtonDarkholme/yats.vim'
-" Plug 'maxmellon/vim-jsx-pretty'
-
 " End ------ https://x-team.com/blog/neovim-javascript/amp/
 
-
 call plug#end()
+
+
+colorscheme dracula
 
 " startify screen
 " let g:startify_custom_header = 'startify#pad(startify#fortune#quote())'
@@ -143,7 +162,6 @@ command! -nargs=0 Prettier :CocCommand prettier.formatFile
 
 
 " From ---- https://github.com/neoclide/coc.nvim
-
 " Set internal encoding of vim, not needed on neovim, since coc.nvim using some
 " unicode characters in the file autoload/float.vim
 
@@ -321,9 +339,8 @@ highlight CocFloating ctermbg=8
 set completeopt=menu,menuone,noselect
 
 lua <<EOF
-  -- Setup nvim-cmp.
+  -- Setup nvim-cmp 
   local cmp = require'cmp'
-
 
   cmp.setup({
     snippet = {
@@ -381,6 +398,7 @@ lua <<EOF
   -- Enable (broadcasting) snippet capability for completion
   capabilities.textDocument.completion.completionItem.snippetSupport = true
 
+
   require('lspconfig')['pylsp'].setup {
     capabilities = capabilities
   }
@@ -399,13 +417,85 @@ lua <<EOF
   }
 
   
-  -- require("flutter-tools").setup{} -- use defaults
   -- require('lspconfig')['bashls'].setup{}
   
   
-  
+require'nvim-treesitter.configs'.setup {
+  -- A list of parser names, or "all"
+  ensure_installed = { "html", "css", "python", "php", "javascript"},
 
+  -- Install parsers synchronously (only applied to `ensure_installed`)
+  sync_install = false,
 
+  -- List of parsers to ignore installing (for "all")
+  ignore_install = { "dukkha" },
+
+  highlight = {
+    -- `false` will disable the whole extension
+    enable = true,
+
+    -- NOTE: these are the names of the parsers and not the filetype. (for example if you want to
+    -- disable highlighting for the `tex` filetype, you need to include `latex` in this list as this is
+    -- the name of the parser)
+    -- list of language that will be disabled
+    -- disable = { "c", "rust" },
+    disable = { "dukkha", "anicca" },
+
+    -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
+    -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
+    -- Using this option may slow down your editor, and you may see some duplicate highlights.
+    -- Instead of true it can also be a list of languages
+    additional_vim_regex_highlighting = false,
+  },
+}
+
+-- UFO folding: kevinhwang91/nvim-ufo  
+-- Can work on Termux too, use 'za' to toggle between
+
+capabilities.textDocument.foldingRange = {
+    dynamicRegistration = false,
+    lineFoldingOnly = true
+}
+vim.wo.foldcolumn = '1'
+vim.wo.foldlevel = 99 -- feel free to decrease the value
+vim.wo.foldenable = true
+
+require('ufo').setup()
+
+-- Dracula theme https://github.com/Mofiqul/dracula.nvim
+-- customize dracula color palette
+vim.g.dracula_colors = {
+  bg = "#282A36",
+  fg = "#F8F8F2",
+  selection = "#44475A",
+  comment = "#6272A4",
+  red = "#FF5555",
+  orange = "#FFB86C",
+  yellow = "#F1FA8C",
+  green = "#50fa7b",
+  purple = "#BD93F9",
+  cyan = "#8BE9FD",
+  pink = "#FF79C6",
+  bright_red = "#FF6E6E",
+  bright_green = "#69FF94",
+  bright_yellow = "#FFFFA5",
+  bright_blue = "#D6ACFF",
+  bright_magenta = "#FF92DF",
+  bright_cyan = "#A4FFFF",
+  bright_white = "#FFFFFF",
+  menu = "#21222C",
+  visual = "#3E4452",
+  gutter_fg = "#4B5263",
+  nontext = "#3B4048",
+}
+-- show the '~' characters after the end of buffers
+vim.g.dracula_show_end_of_buffer = true
+-- use transparent background
+vim.g.dracula_transparent_bg = true
+-- set custom lualine background color
+vim.g.dracula_lualine_bg_color = "#44475a"
+-- set italic comment
+vim.g.dracula_italic_comment = true
 
 
 
@@ -413,6 +503,20 @@ lua <<EOF
 
 
 EOF
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 " " English word popup suggestion
 " " -------- modified https://stackoverflow.com/a/41432390
