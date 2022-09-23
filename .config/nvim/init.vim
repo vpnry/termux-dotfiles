@@ -1,10 +1,12 @@
-syntax on " highlight syntax
-" set background=dark
+" thay telex bằng VNI và VIQR
+" set keymap=vietnamese-telex
+
+" syntax on " highlight syntax
 set number " Show line number
+set relativenumber " Show relative line number
 
 " Spelling
 " set spell spelllang=en_gb
-set relativenumber " Show relative line number
 
 set autoindent
 set shiftwidth=2
@@ -82,28 +84,49 @@ autocmd VimEnter * if argc() == 0 && !exists('s:std_in') | NERDTree | endif
 " ------------ NerdTree ------------
 
 
-" setlocal foldmethod=indent
-" Use UFO instead
+" UFO folding plugin is another choice. Here I just use the simple indentation method.
+" Shortcuts: zC
+" za toggle
+" zo/zO
+" zM/zR fold/unfold all
+set foldmethod=indent
 set nofoldenable
 
 call plug#begin(stdpath('data') . '/plugged')
 
+
+
+" Surround around
+Plug 'kylechui/nvim-surround'
+" Php formatter
+" Can use shift + v then =; or press gg=G
+" Translate
+" Plug 'potamides/pantran.nvim'
+
+
 " Folding UFO
-Plug 'kevinhwang91/promise-async' " must loaded before nvim-ufo
-Plug 'kevinhwang91/nvim-ufo'
+" Plug 'kevinhwang91/promise-async' " must loaded before nvim-ufo
+" Plug 'kevinhwang91/nvim-ufo'
 
 " Dracula theme 1:
 " Plug 'dracula/vim', { 'as': 'dracula' }
 " This Dracula theme is better, it supports more plugins:
 Plug 'Mofiqul/dracula.nvim'
 
+" Color in statusline
+Plug 'itchyny/lightline.vim'
+
 " Find and replace far.vim
 Plug 'brooth/far.vim'
 
 " vim-surround
 Plug 'https://github.com/tpope/vim-surround'
-Plug 'https://github.com/preservim/nerdtree' "NerdTree
-Plug 'https://github.com/tpope/vim-commentary' "For Commenting gcc & gc
+
+
+"NerdTree
+Plug 'https://github.com/preservim/nerdtree' 
+"For Commenting gcc & gc
+Plug 'https://github.com/tpope/vim-commentary' 
 
 " From ------ https://github.com/hrsh7th/nvim-cmp
 Plug 'neovim/nvim-lspconfig'
@@ -151,6 +174,9 @@ colorscheme dracula
 " Auto format on save python file
 let g:autopep8_on_save = 1
 let g:autopep8_disable_show_diff = 1
+
+" Auto format on saving php file 
+
 
 " Cursor modes
 let &t_SI = "\<esc>[5 q" " I beam cursor for insert mode
@@ -445,22 +471,31 @@ require'nvim-treesitter.configs'.setup {
     -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
     -- Using this option may slow down your editor, and you may see some duplicate highlights.
     -- Instead of true it can also be a list of languages
-    additional_vim_regex_highlighting = false,
+    -- additional_vim_regex_highlighting = false,
+
+	  -- setting it to 'false' caused indentation problems with python, so let it be true
+    additional_vim_regex_highlighting = true,
   },
 }
 
 -- UFO folding: kevinhwang91/nvim-ufo  
 -- Can work on Termux too, use 'za' to toggle between
 
-capabilities.textDocument.foldingRange = {
-    dynamicRegistration = false,
-    lineFoldingOnly = true
-}
-vim.wo.foldcolumn = '1'
-vim.wo.foldlevel = 99 -- feel free to decrease the value
-vim.wo.foldenable = true
 
-require('ufo').setup()
+
+--capabilities.textDocument.foldingRange = {
+--    dynamicRegistration = false,
+--    lineFoldingOnly = true
+--}
+--vim.wo.foldcolumn = '1'
+--vim.wo.foldlevel = 99 -- feel free to decrease the value
+--vim.wo.foldenable = true
+--
+--require('ufo').setup()
+
+-- Surround around ysa 
+require('nvim-surround').setup()
+
 
 -- Dracula theme https://github.com/Mofiqul/dracula.nvim
 -- customize dracula color palette
