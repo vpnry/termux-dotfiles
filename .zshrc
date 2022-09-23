@@ -321,4 +321,20 @@ export PATH="$PATH:/data/data/com.termux/files/home/.local/bin"
 # install with curl -L https://fly.io/install.sh | sh
 
 export FLYCTL_INSTALL="/data/data/com.termux/files/home/.fly"
-  export PATH="$FLYCTL_INSTALL/bin:$PATH"
+export PATH="$FLYCTL_INSTALL/bin:$PATH"
+
+
+function dpcpnry_switch_git_ssh() {
+	# Change ssh account
+	eval "$(ssh-agent -s)"
+	ssh-add ~/.ssh/id_ed25519
+}
+
+
+function vpnry_switch_git_ssh() {
+	eval "$(ssh-agent -s)"
+	ssh-add ~/.ssh/id_ed25519_2vp
+
+}
+
+
