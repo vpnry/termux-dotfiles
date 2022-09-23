@@ -1,0 +1,10 @@
+.zsh_history
+.gitconfig
+.python_history
+.node_repl_history
+.bash_history
+.sqlite_history
+.octave_hist
+.gnuplot_history
+.mysql_history
+.termux_authinfo
