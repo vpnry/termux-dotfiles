@@ -206,9 +206,31 @@ function download() {
     aria2c --continue=true --max-concurrent-downloads=10 --max-overall-download-limit=0 --check-certificate=false "$*"
 }
 
+
+function dpcpnry_switch_git_ssh() {
+	# Change ssh account
+	eval "$(ssh-agent -s)"
+	ssh-add ~/.ssh/id_ed25519
+}
+
+
+function vpnry_switch_git_ssh() {
+	eval "$(ssh-agent -s)"
+	ssh-add ~/.ssh/id_ed25519_2vp
+
+}
+
+
 function gitt() {
     git add .
     git commit -m "$*"
+    git push
+}
+
+function gittvpnry() {
+    git add .
+    git commit -m "$*"
+		vpnry_switch_git_ssh
     git push
 }
 
@@ -322,19 +344,4 @@ export PATH="$PATH:/data/data/com.termux/files/home/.local/bin"
 
 export FLYCTL_INSTALL="/data/data/com.termux/files/home/.fly"
 export PATH="$FLYCTL_INSTALL/bin:$PATH"
-
-
-function dpcpnry_switch_git_ssh() {
-	# Change ssh account
-	eval "$(ssh-agent -s)"
-	ssh-add ~/.ssh/id_ed25519
-}
-
-
-function vpnry_switch_git_ssh() {
-	eval "$(ssh-agent -s)"
-	ssh-add ~/.ssh/id_ed25519_2vp
-
-}
-
 
