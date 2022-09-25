@@ -207,14 +207,14 @@ function download() {
 }
 
 
-function dpcpnry_switch_git_ssh() {
+function ssh_use_dpcpnry() {
 	# Change ssh account
 	eval "$(ssh-agent -s)"
 	ssh-add ~/.ssh/id_ed25519
 }
 
 
-function vpnry_switch_git_ssh() {
+function ssh_use_vpnry() {
 	eval "$(ssh-agent -s)"
 	ssh-add ~/.ssh/id_ed25519_2vp
 
@@ -224,14 +224,24 @@ function vpnry_switch_git_ssh() {
 function gitt() {
     git add .
     git commit -m "$*"
+
+		echo 'Switching to default dpcpnry SSH account'
+		ssh_use_dpcpnry
+
     git push
 }
 
 function gittvpnry() {
     git add .
     git commit -m "$*"
-		vpnry_switch_git_ssh
+
+		echo 'Switching to personal vpnry SSH account'
+		ssh_use_vpnry
+
     git push
+	
+		echo 'Switching to default dpcpnry SSH account'
+		ssh_use_dpcpnry
 }
 
 function pwrite() {
