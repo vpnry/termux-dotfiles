@@ -111,6 +111,9 @@ export EDITOR='nvim'
 
 
 # pnry alias
+
+alias prettier_js_css='prettier -w --semi=true  --tab-width 2  '
+
 alias wget='wget -c'
 alias e='exit'
 alias py='python3'
@@ -167,6 +170,7 @@ function print_my_alias() {
     # echo ''
     
     # echo '------ Some alias ------'
+		echo 'prettier_js_css <file>'
     echo 'sshd: start ssh sever, passw is .'
     echo 'On the other machine: ssh -p 8022 ip-of-android'
     echo "logcat -s 'sshd:*' will show sshd log"
@@ -209,14 +213,18 @@ function download() {
 
 function ssh_use_dpcpnry() {
 	# Change ssh account
-	eval "$(ssh-agent -s)"
-	ssh-add ~/.ssh/id_ed25519
+	  echo ''
+		echo '------- use dpcpnry ssh -------'
+  	eval "$(ssh-agent -s)"
+	  ssh-add ~/.ssh/id_ed25519
 }
 
 
 function ssh_use_vpnry() {
-	eval "$(ssh-agent -s)"
-	ssh-add ~/.ssh/id_ed25519_2vp
+	  echo ''
+		echo '------- use vnry ssh -------'
+	  eval "$(ssh-agent -s)"
+	  ssh-add ~/.ssh/id_ed25519_2vp
 
 }
 
@@ -225,7 +233,9 @@ function gittdpcpnry() {
     git add .
     git commit -m "$*"
 
-		echo 'Switching to default dpcpnry SSH account'
+	  echo ''
+		echo '---------------'
+		echo 'Switching to dpcpnry SSH account'
 		ssh_use_dpcpnry
 
     git push
@@ -237,12 +247,16 @@ function gittvpnry() {
     git add .
     git commit -m "$*"
 
-		echo 'Switching to personal vpnry SSH account'
+	  echo ''
+		echo '---------------'
+		echo ' * Switching to vpnry SSH account'
 		ssh_use_vpnry
 
     git push
-	
-		echo 'Switching to default dpcpnry SSH account'
+
+	  echo ''
+		echo '---------------'
+		echo ' * Switching to BACK to dpcpnry SSH account'
 		ssh_use_dpcpnry
 }
 
