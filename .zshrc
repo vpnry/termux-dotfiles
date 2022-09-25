@@ -221,7 +221,7 @@ function ssh_use_vpnry() {
 }
 
 
-function gitt() {
+function gittdpcpnry() {
     git add .
     git commit -m "$*"
 
@@ -230,6 +230,8 @@ function gitt() {
 
     git push
 }
+
+alias gitt=gittdpcpnry
 
 function gittvpnry() {
     git add .
