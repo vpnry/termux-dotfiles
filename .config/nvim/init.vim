@@ -14,6 +14,10 @@ set softtabstop=2
 set tabstop=2
 set smarttab
 
+" auto use system clipboard for Copy&Paste 
+" https://stackoverflow.com/a/10979533
+set clipboard=unnamedplus
+
 " a few key mapping
 inoremap jk <ESC> " type jk = ESC
 let mapleader = ","
@@ -357,6 +361,19 @@ nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 
 " pnry change bgclor Termux
 highlight CocFloating ctermbg=8
+
+" add missing import golang :CocInstall coc-go
+
+autocmd BufWritePre *.go :silent call CocAction('runCommand', 'editor.action.organizeImport')
+
+" Launch gopls when Go files are in use
+" let g:LanguageClient_serverCommands = {
+"        \ 'go': ['gopls']
+"        \ }
+
+
+
+
 
 " End ---- https://github.com/neoclide/coc.nvim
 
