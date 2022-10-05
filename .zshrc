@@ -177,7 +177,7 @@ function print_my_alias() {
     echo 'pkill sshd: stop ssh server'
     # echo 'py: python3'
     # echo 'ss: apachectl start (php server:8927)'
-    echo 'sdh/ssc/scc: apachectl start (php server:8927) - Dhamma/Code/Corpus fts'
+    echo 'sss: server apachectl start (php server:8927) - Dhamma/Code/Corpus fts'
     # echo 'ee: apachectl stop'
     # echo 'sss: http-server :8765 and open URL'
     # echo 'lc: localhost by http-server (nodejs)'
@@ -192,7 +192,9 @@ function print_my_alias() {
     echo 'jjj: jupyter-notebook passw is: p'
     echo 'iii: ipython'
     echo 'www: webdavServer python-network'
-    echo 'rplace a b: replace all files under .'
+		echo 'rplace a b: replace all files under .'
+		 
+		echo 'lsphone: list all files on phone'
     # echo 'uuu: run UBUNTU...'
     # echo 's2t file.wav: Mozilla deepspeech speech2text'
     # echo '(aria2c) download -o <new_name> <url>'
@@ -202,6 +204,7 @@ function print_my_alias() {
     # echo 'l: clear'
 		
     echo ",php: apachectl start;"
+		echo "makecython make cli cython app"
     echo 'To update Oh M Z run: omz update'
     echo '---------------------------------------------'
 }
@@ -292,6 +295,7 @@ function lsphone() {
 
 function makecython() {
     # cythonize, make binary file from py code
+		echo 'Using cython to make binary cli tool. Pls wait'
     cython $1  --embed -3
     
     cname=$(echo $1 | sed -e "s/.py//")
@@ -304,6 +308,8 @@ function makecython() {
     cp $cname /data/data/com.termux/files/usr/bin
     
     chmod +x /data/data/com.termux/files/usr/bin/$cname
+
+		echo 'Done!'
 }
 
 function resizeIMG() {
@@ -348,19 +354,23 @@ function openClipboardPathNvim() {
     nvim $f1l3
     # if dir then cd dir
 		elif [ -d "$f1l3" ]; then 
+		echo 'dir'
 		cd $f1l3
     fi 
 }
 
+# go to Test dir
+
+ppp
+
 # check clipboard and open in nvim if it is a file path
+
 if [[ $f1l3P3th == /* ]]; then 
  openClipboardPathNvim
 fi 
 
 print_my_alias
 
-# go to Test dir
-ppp
 
 # Created by `pipx` on 2022-07-15 17:39:09
 export PATH="$PATH:/data/data/com.termux/files/home/.local/bin"
