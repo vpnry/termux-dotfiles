@@ -114,6 +114,12 @@ export EDITOR='nvim'
 
 alias prettier_js_css='prettier -w --semi=true  --tab-width 2  '
 
+# cls shows permission in number 
+# https://stackoverflow.com/questions/1795976/can-the-unix-list-command-ls-output-numerical-chmod-permissions
+# alias cls="ls -l | awk   '{k=0;for(i=0;i<=8;i++)k+=((substr(\$1,i+2,1)~/[rwx]/)*2^(8-i));if(k)printf(\"%0o \",k);print}'"
+
+alias cls='stat -c "%a %n" '
+
 alias wget='wget -c'
 alias e='exit'
 alias py='python3'
@@ -170,6 +176,7 @@ function print_my_alias() {
     # echo ''
     
     # echo '------ Some alias ------'
+		echo 'cls: show chmod permission in number'
 		echo 'prettier_js_css <file>'
     echo 'sshd: start ssh sever, passw is .'
     echo 'On the other machine: ssh -p 8022 ip-of-android'
@@ -206,6 +213,11 @@ function print_my_alias() {
     echo ",php: apachectl start;"
 		echo "makecython make cli cython app"
     echo 'To update Oh M Z run: omz update'
+
+    # https://github.com/Hax4us/TermuxAlpine
+		echo 'startalpine: Start Alpine startalpine'
+
+
     echo '---------------------------------------------'
 }
 
@@ -374,6 +386,9 @@ print_my_alias
 
 # Created by `pipx` on 2022-07-15 17:39:09
 export PATH="$PATH:/data/data/com.termux/files/home/.local/bin"
+
+# rust 
+export PATH="$PATH:/data/data/com.termux/files/home/.cargo/bin"
 
 # fly.io 
 # install with curl -L https://fly.io/install.sh | sh
