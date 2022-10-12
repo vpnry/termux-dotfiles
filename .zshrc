@@ -390,9 +390,3 @@ export PATH="$PATH:/data/data/com.termux/files/home/.local/bin"
 # rust 
 export PATH="$PATH:/data/data/com.termux/files/home/.cargo/bin"
 
-# fly.io 
-# install with curl -L https://fly.io/install.sh | sh
-
-export FLYCTL_INSTALL="/data/data/com.termux/files/home/.fly"
-export PATH="$FLYCTL_INSTALL/bin:$PATH"
-
