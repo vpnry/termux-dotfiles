@@ -1,6 +1,6 @@
 Some dot files on Termux Android app.
 
-- `.bashrc` : not much configured since I use `omz` aka `.zshrc` 
+- `.bashrc` : not much configured since I use `omz` aka `.zshrc`
 
 - `.zshrc` : mostly shortcuts and alias, some handy functions
 
@@ -10,10 +10,8 @@ Some dot files on Termux Android app.
 
 They may not work for you, consider not blindly copy and paste.
 
-+ Extra keys
-![](termux-extra-keys.jpg)
+- Extra keys
+  ![](termux-extra-keys.jpg)
 
-
-+ Neovim
-![](termux-neovim.jpg)
-
+- Neovim
+  ![](termux-neovim.jpg)

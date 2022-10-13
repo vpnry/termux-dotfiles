@@ -159,6 +159,11 @@ alias rm=rm -rf
 # alias uuu='cd ~/ ; ./startubuntu.sh'
 
 alias www='cd ~/; cd .. ;wsgidav --host=0.0.0.0 --port=9999 --root=./ --auth=anonymous'
+
+# use default tem git ssh
+alias gitt=gittdpcpnry
+
+
 # alias sss='http-server -p 8765 -o'
 # Mozilla Deep Speech library
 
@@ -220,10 +225,12 @@ function print_my_alias() {
 
 
 		echo '---------------------------------------------'
+
 	}
 
 	function download() {
 		aria2c --continue=true --max-concurrent-downloads=10 --max-overall-download-limit=0 --check-certificate=false "$*"
+
 	}
 
 
@@ -257,7 +264,6 @@ function print_my_alias() {
 		git push
 	}
 
-	alias gitt=gittdpcpnry
 
 	function gittvpnry() {
 		git add .
@@ -284,8 +290,10 @@ function print_my_alias() {
 	}
 
 	function ,rplace() {
+
 	echo "Replacing files in" $(pwd);
 	find . -type f -not -path '*/\.*' -exec sed -i -e "s/$1/$2/g" -- {} +
+
 }
 
 function lsphone() {
@@ -373,26 +381,35 @@ function openClipboardPathNvim() {
 	}
 
 
-function ignoreLargeFile() {
+	function ignoreLargeFile() {
 		# https://stackoverflow.com/questions/4035779/gitignore-by-file-size
 
 		echo "automatically ignoring large files > 99MB"
 
-    # find . -size +55M | sed 's|^\./||g' >> .gitignore
+		# find . -size +55M | sed 's|^\./||g' >> .gitignore
 
-    find . -size +99M -printf '%P\n' >> .gitignore
+		find . -size +99M -printf '%P\n' >> .gitignore
 
-    # not sure why uniq > .gitignore does not work on my Termux 
+		# not sure why uniq > .gitignore does not work on my Termux 
 
-    cat .gitignore | sort | uniq >> gitignoree
+		cat .gitignore | sort | uniq >> gitignoree
 
-    mv gitignoree .gitignore
+		mv gitignoree .gitignore
 
-}
+	}
 
 
+# Created by `pipx` on 2022-07-15 17:39:09
+export PATH="$PATH:/data/data/com.termux/files/home/.local/bin"
 
+# rust 
+export PATH="$PATH:/data/data/com.termux/files/home/.cargo/bin"
+
+
+# AUTO RUN ON STARTUP
 # check clipboard and open in nvim if it is a file path
+# if a dir then cd to it 
+# Tip: use copy path command on Total Commander Android app, then open Termux shortcut
 
 if [[ $f1l3OrDirP3th == /* ]]; then 
 	openClipboardPathNvim
@@ -402,10 +419,4 @@ else
 	print_my_alias
 fi 
 
-
-# Created by `pipx` on 2022-07-15 17:39:09
-export PATH="$PATH:/data/data/com.termux/files/home/.local/bin"
-
-# rust 
-export PATH="$PATH:/data/data/com.termux/files/home/.cargo/bin"
 
