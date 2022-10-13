@@ -118,7 +118,7 @@ alias prettier_js_css='prettier -w --semi=true  --tab-width 2  '
 # https://stackoverflow.com/questions/1795976/can-the-unix-list-command-ls-output-numerical-chmod-permissions
 # alias cls="ls -l | awk   '{k=0;for(i=0;i<=8;i++)k+=((substr(\$1,i+2,1)~/[rwx]/)*2^(8-i));if(k)printf(\"%0o \",k);print}'"
 
-alias cls='stat -c "%a %n" '
+alias cls='stat -c "%a %n" * '
 
 alias wget='wget -c'
 alias e='exit'
@@ -173,215 +173,234 @@ alias www='cd ~/; cd .. ;wsgidav --host=0.0.0.0 --port=9999 --root=./ --auth=ano
 export NODE_PATH=/data/data/com.termux/files/usr/lib/node_modules
 
 function print_my_alias() {
-    # echo ''
-    
-    # echo '------ Some alias ------'
+	# echo ''
+
+		# echo '------ Some alias ------'
 		echo 'cls: show chmod permission in number'
 		echo 'prettier_js_css <file>'
-    echo 'sshd: start ssh sever, passw is .'
-    echo 'On the other machine: ssh -p 8022 ip-of-android'
-    echo "logcat -s 'sshd:*' will show sshd log"
-    echo 'pkill sshd: stop ssh server'
-    # echo 'py: python3'
-    # echo 'ss: apachectl start (php server:8927)'
-    echo 'sss: server apachectl start (php server:8927) - Dhamma/Code/Corpus fts'
-    # echo 'ee: apachectl stop'
-    # echo 'sss: http-server :8765 and open URL'
-    # echo 'lc: localhost by http-server (nodejs)'
-    echo 'lm/golm: list/go to npm modules dirs'
-    # echo 'gdd: go to /storage/shared/download'
-    # # echo 'java: java Hello.java (by ~/.java.sh)'
-    echo 'transfer: upload to transfer.sh'
-    # echo 'ppp: go to pnryCODE/TEST code'
-    echo 'wwww: webdavServer current dir'
-    echo 'wwwh: webdavServer Termux root dir'
-    echo 'giit: git add.;git commit -m'
-    echo 'jjj: jupyter-notebook passw is: p'
-    echo 'iii: ipython'
-    echo 'www: webdavServer python-network'
+		echo 'sshd: start ssh sever, passw is .'
+		echo 'On the other machine: ssh -p 8022 ip-of-android'
+		echo "logcat -s 'sshd:*' will show sshd log"
+		echo 'pkill sshd: stop ssh server'
+		# echo 'py: python3'
+		# echo 'ss: apachectl start (php server:8927)'
+		echo 'sss: server apachectl start (php server:8927) - Dhamma/Code/Corpus fts'
+		# echo 'ee: apachectl stop'
+		# echo 'sss: http-server :8765 and open URL'
+		# echo 'lc: localhost by http-server (nodejs)'
+		echo 'lm/golm: list/go to npm modules dirs'
+		# echo 'gdd: go to /storage/shared/download'
+		# # echo 'java: java Hello.java (by ~/.java.sh)'
+		echo 'transfer: upload to transfer.sh'
+		# echo 'ppp: go to pnryCODE/TEST code'
+		echo 'wwww: webdavServer current dir'
+		echo 'wwwh: webdavServer Termux root dir'
+		echo 'giit: git add.;git commit -m'
+		echo 'jjj: jupyter-notebook passw is: p'
+		echo 'iii: ipython'
+		echo 'www: webdavServer python-network'
 		echo 'rplace a b: replace all files under .'
-		 
-		echo 'lsphone: list all files on phone'
-    # echo 'uuu: run UBUNTU...'
-    # echo 's2t file.wav: Mozilla deepspeech speech2text'
-    # echo '(aria2c) download -o <new_name> <url>'
-    # echo 'vv: start nvim'
-    # # echo 'd: run dart'
-    # echo 'pwrite: git push notes repo'
-    # echo 'l: clear'
-		
-    echo ",php: apachectl start;"
-		echo "makecython make cli cython app"
-    echo 'To update Oh M Z run: omz update'
 
-    # https://github.com/Hax4us/TermuxAlpine
+		echo 'lsphone: list all files on phone'
+		echo 'ignoreLargeFile: auto add large files > .gitignore'
+		# echo 'uuu: run UBUNTU...'
+		# echo 's2t file.wav: Mozilla deepspeech speech2text'
+		# echo '(aria2c) download -o <new_name> <url>'
+		# echo 'vv: start nvim'
+		# # echo 'd: run dart'
+		# echo 'pwrite: git push notes repo'
+		# echo 'l: clear'
+
+		echo ",php: apachectl start;"
+		echo "makecython make cli cython app"
+		echo 'To update Oh M Z run: omz update'
+
+		# https://github.com/Hax4us/TermuxAlpine
 		echo 'startalpine: Start Alpine startalpine'
 
 
-    echo '---------------------------------------------'
-}
+		echo '---------------------------------------------'
+	}
 
-function download() {
-    aria2c --continue=true --max-concurrent-downloads=10 --max-overall-download-limit=0 --check-certificate=false "$*"
-}
+	function download() {
+		aria2c --continue=true --max-concurrent-downloads=10 --max-overall-download-limit=0 --check-certificate=false "$*"
+	}
 
 
-function ssh_use_dpcpnry() {
-	# Change ssh account
-	  echo ''
+	function ssh_use_dpcpnry() {
+		# Change ssh account
+		echo ''
 		echo '------- use dpcpnry ssh -------'
-  	eval "$(ssh-agent -s)"
-	  ssh-add ~/.ssh/id_ed25519
-}
+		eval "$(ssh-agent -s)"
+		ssh-add ~/.ssh/id_ed25519
+	}
 
 
-function ssh_use_vpnry() {
-	  echo ''
+	function ssh_use_vpnry() {
+		echo ''
 		echo '------- use vnry ssh -------'
-	  eval "$(ssh-agent -s)"
-	  ssh-add ~/.ssh/id_ed25519_2vp
+		eval "$(ssh-agent -s)"
+		ssh-add ~/.ssh/id_ed25519_2vp
 
-}
+	}
 
 
-function gittdpcpnry() {
-    git add .
-    git commit -m "$*"
+	function gittdpcpnry() {
+		git add .
+		git commit -m "$*"
 
-	  echo ''
+		echo ''
 		echo '---------------'
 		echo 'Switching to dpcpnry SSH account'
 		ssh_use_dpcpnry
 
-    git push
-}
+		git push
+	}
 
-alias gitt=gittdpcpnry
+	alias gitt=gittdpcpnry
 
-function gittvpnry() {
-    git add .
-    git commit -m "$*"
+	function gittvpnry() {
+		git add .
+		git commit -m "$*"
 
-	  echo ''
+		echo ''
 		echo '---------------'
 		echo ' * Switching to vpnry SSH account'
 		ssh_use_vpnry
 
-    git push
+		git push
 
-	  echo ''
+		echo ''
 		echo '---------------'
 		echo ' * Switching to BACK to dpcpnry SSH account'
 		ssh_use_dpcpnry
-}
+	}
 
-function pwrite() {
-    cd /storage/emulated/0/pWriting/
-    git add .
-    git commit -m "git push fr Termux phone"
-    git push
-}
+	function pwrite() {
+		cd /storage/emulated/0/pWriting/
+		git add .
+		git commit -m "git push fr Termux phone"
+		git push
+	}
 
-function ,rplace() {
-    echo "Replacing files in" $(pwd);
-    find . -type f -not -path '*/\.*' -exec sed -i -e "s/$1/$2/g" -- {} +
+	function ,rplace() {
+	echo "Replacing files in" $(pwd);
+	find . -type f -not -path '*/\.*' -exec sed -i -e "s/$1/$2/g" -- {} +
 }
 
 function lsphone() {
-    # this fnc list all files in the device.
-    # The result is for file search
+	# this fnc list all files in the device.
+	# The result is for file search
 
-    DDDD=$(date -Idate)
-    echo 'Listing..., please wait...'
-    find /storage/emulated/0/ -type f > /storage/emulated/0/localhost/resources/phonelist/phone$DDDD.txt
-    
-    # add <br> before each file path
-    sed -i -e "s~/storage/emulated/0/~<br><br>/storage/emulated/0/~g" /storage/emulated/0/localhost/resources/phonelist/phone$DDDD.txt
-    
-    echo "Done listing! \nCheck /storage/emulated/0/localhost/resources/phonelist/phone$DDDD.txt"
-    echo 'Deleting indexed old sqlite3 in: /storage/emulated/0/localhost/indexed_database/phonelist.sqlite3'
-    rm -rf /storage/emulated/0/localhost/indexed_database/phonelist.sqlite3
-    echo "----\n"
-    echo "Done all"
-}
+	DDDD=$(date -Idate)
+	echo 'Listing..., please wait...'
+	find /storage/emulated/0/ -type f > /storage/emulated/0/localhost/resources/phonelist/phone$DDDD.txt
 
-function makecython() {
-    # cythonize, make binary file from py code
+		# add <br> before each file path
+		sed -i -e "s~/storage/emulated/0/~<br><br>/storage/emulated/0/~g" /storage/emulated/0/localhost/resources/phonelist/phone$DDDD.txt
+
+		echo "Done listing! \nCheck /storage/emulated/0/localhost/resources/phonelist/phone$DDDD.txt"
+		echo 'Deleting indexed old sqlite3 in: /storage/emulated/0/localhost/indexed_database/phonelist.sqlite3'
+		rm -rf /storage/emulated/0/localhost/indexed_database/phonelist.sqlite3
+		echo "----\n"
+		echo "Done all"
+	}
+
+	function makecython() {
+		# cythonize, make binary file from py code
 		echo 'Using cython to make binary cli tool. Pls wait'
-    cython $1  --embed -3
-    
-    cname=$(echo $1 | sed -e "s/.py//")
-    
-    PYTHONLIBVER=python$(python3 -c 'import sys; print(".".join(map(str, sys.version_info[:2])))')$(python3-config --abiflags)
-    
-    gcc -Os $(python3-config --includes) $cname.c -o $cname $(python3-config --ldflags) -l$PYTHONLIBVER
-    echo "Coping and chmod +x  $cname to /data/data/com.termux/files/usr/bin"
-    
-    cp $cname /data/data/com.termux/files/usr/bin
-    
-    chmod +x /data/data/com.termux/files/usr/bin/$cname
+		cython $1  --embed -3
+
+		cname=$(echo $1 | sed -e "s/.py//")
+
+		PYTHONLIBVER=python$(python3 -c 'import sys; print(".".join(map(str, sys.version_info[:2])))')$(python3-config --abiflags)
+
+		gcc -Os $(python3-config --includes) $cname.c -o $cname $(python3-config --ldflags) -l$PYTHONLIBVER
+		echo "Coping and chmod +x  $cname to /data/data/com.termux/files/usr/bin"
+
+		cp $cname /data/data/com.termux/files/usr/bin
+
+		chmod +x /data/data/com.termux/files/usr/bin/$cname
 
 		echo 'Done!'
-}
+	}
 
-function resizeIMG() {
-    # jpegoptim <percent> <files>
-    # jpegoptim 20 *.jpg
-    # default is to reduce to 10 percent
-    
-    perCent=10
-    outDir=_jpegoptim
-    
-    if [[ $1 -gt 0 ]]; then
-    perCent=$1
-    else
-    echo reducing to $perCent%
-    fi
-    
-    echo resizing "${@:2}" to $perCent% quality to $outDir
-    mkdir -p $outDir
-    jpegoptim --size=$perCent% --overwrite --dest=$outDir "${@:2}"
-    
-    # instead of using "${@:2}", we also can use shift command
-    # shift: will consume/remove the first arg
-    # "$@" : then "$@" will have 2nd arg onwards
+	function resizeIMG() {
+		# jpegoptim <percent> <files>
+		# jpegoptim 20 *.jpg
+		# default is to reduce to 10 percent
 
-}
+		perCent=10
+		outDir=_jpegoptim
 
-f1l3P3th=$(termux-clipboard-get);
+		if [[ $1 -gt 0 ]]; then
+			perCent=$1
+		else
+			echo reducing to $perCent%
+		fi
+
+		echo resizing "${@:2}" to $perCent% quality to $outDir
+		mkdir -p $outDir
+		jpegoptim --size=$perCent% --overwrite --dest=$outDir "${@:2}"
+
+		# instead of using "${@:2}", we also can use shift command
+		# shift: will consume/remove the first arg
+		# "$@" : then "$@" will have 2nd arg onwards
+
+	}
+
+# termux command
+f1l3OrDirP3th=$(termux-clipboard-get);
 
 function openClipboardPathNvim() {
-    
-    # f1l3P3th=$(termux-clipboard-get);
-    # Texmux home dir shortcut in Total commander, I named as Termux => path will begin with ///_Termux/
-    # This will depend on what you named it
-    
-    if [[ $f1l3P3th == ///_Termux* ]]; then
-    	f1l3=$(echo $f1l3P3th | sed -e "s~///_Termux/~$HOME/~")
-    else 
-    	f1l3=$f1l3P3th
-    fi 
-    # open with nvim
-    if [[ -f "$f1l3" ]]; then 
-    nvim $f1l3
-    # if dir then cd dir
-		elif [ -d "$f1l3" ]; then 
-		echo 'dir'
-		cd $f1l3
-    fi 
+
+		# f1l3OrDirP3th=$(termux-clipboard-get);
+		# Texmux home dir shortcut in Total commander, I named as Termux => path will begin with ///_Termux/
+		# This will depend on what you named it
+
+		if [[ $f1l3OrDirP3th == ///_Termux* ]]; then
+			f1l3OrDir=$(echo $f1l3OrDirP3th | sed -e "s~///_Termux/~$HOME/~")
+		else 
+			f1l3OrDir=$f1l3OrDirP3th
+		fi 
+		# open with nvim
+		if [[ -f "$f1l3OrDir" ]]; then 
+			nvim $f1l3OrDir
+			# if dir then cd dir
+		elif [ -d "$f1l3OrDir" ]; then 
+			cd $f1l3OrDir
+		fi 
+	}
+
+
+function ignoreLargeFile() {
+		# https://stackoverflow.com/questions/4035779/gitignore-by-file-size
+
+		echo "automatically ignoring large files > 99MB"
+
+    # find . -size +55M | sed 's|^\./||g' >> .gitignore
+
+    find . -size +99M -printf '%P\n' >> .gitignore
+
+    # not sure why uniq > .gitignore does not work on my Termux 
+
+    cat .gitignore | sort | uniq >> gitignoree
+
+    mv gitignoree .gitignore
+
 }
 
-# go to Test dir
 
-ppp
 
 # check clipboard and open in nvim if it is a file path
 
-if [[ $f1l3P3th == /* ]]; then 
- openClipboardPathNvim
+if [[ $f1l3OrDirP3th == /* ]]; then 
+	openClipboardPathNvim
+else
+	# go to phone TEST dir
+	ppp 
+	print_my_alias
 fi 
-
-print_my_alias
 
 
 # Created by `pipx` on 2022-07-15 17:39:09
