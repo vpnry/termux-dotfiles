@@ -284,7 +284,7 @@ function gittvpnry() {
 function pwrite() {
 	cd /storage/emulated/0/pWriting/
 	git add .
-	git commit -m "git push fr Termux phone"
+	git commit -m "Sync:$(date "+%Y%m%d_%H%M%S")"
 	git push
 }
 
@@ -413,7 +413,20 @@ if [[ $f1l3OrDirP3th == /* ]]; then
 else
 	# go to phone TEST dir
 	ppp 
-	print_my_alias
+	echo 'Use print_my_alias to list aliases'
+	echo 'For fixing any repository issues, try: termux-change-repo'
+	echo ''
 fi 
 
+
+
+# LOG ALL COMMANDS
+# https://superuser.com/questions/735660/whats-the-zsh-equivalent-of-bashs-prompt-command
+# https://spin.atomicobject.com/2016/05/28/log-bash-history/
+#
+precmd() { 
+	# echo "$(date "+%Y-%m-%d.%H:%M:%S") $(pwd) $(history -1)" >> ~/.logs/bash-history-$(date "+%Y-%m-%d").log
+	echo "$(history -1)" >> ~/.logs/bash_history_$(date "+%Y_%m_%d").log
+
+}
 
