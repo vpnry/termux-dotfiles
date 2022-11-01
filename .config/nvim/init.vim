@@ -1,5 +1,3 @@
-" thay telex bằng VNI và VIQR
-" set keymap=vietnamese-telex
 
 " syntax on " highlight syntax
 set number " Show line number
@@ -28,211 +26,68 @@ map fc <ESC>:wq<cr> " save and quit
 map fq <ESC>:q!<cr> " not save and quit 
 map fn <ESC>:tabnew<cr> " new tab 
 
-" ----- switch between tabs
-map <A-Right> gt 
-map <A-Left> gT 
-map tn :tabnew<cr>
-map tc :tabclose<cr>
-map <C-w> :tabclose<cr> 
-" ----- switch between tabs
 
-" ----- Find & replace -----
-" Use ripgrep for faster grep
-if executable("rg")
-set grepprg=rg\ --vimgrep 
-endif
-
-set ignorecase smartcase "search will be case-sensative if it contains Uppercase, require set ignorecase
-set hlsearch " high light Search
-set incsearch " show search results as you type
-" Select a word in Visual mode, press Ctrl + r to find and replace https://stackoverflow.com/a/676619
-vnoremap <C-r> "hy:%s/<C-r>h//g<left><left>
-
-" Add sthing in font in visual mode
-vnoremap . :norm.<CR>
-
-" ------------ far.vim find & replace
-set lazyredraw            " improve scrolling performance when navigating through large results
-set regexpengine=1        " use old regexp engine
-let g:far#enable_undo=1
-let g:far#auto_preview=0
-" Use Ripgrep to find candidate, requires ripgrep installed
-" let g:far#source='rg'
-" maximum amount of candidates. Default 1000
-let g:far#limit=999999999
-" let g:far#glob_mode='native'
-
-" Find only :Farf pattern **/*.py
-map ff :Farf<cr>
-" Find and Replace
-map fr :Farr<cr> 
-" Confirm replace action for Far.vim
-map fd :Fardo<cr>
-" shortcut for far.vim find
-nnoremap <silent> <A-f>  :Farf<cr>
-vnoremap <silent> <A-f>  :Farf<cr>
-" shortcut for far.vim replace
-nnoremap <silent> <A-r>  :Farr<cr>
-vnoremap <silent> <A-r>  :Farr<cr>
-" ------------ far.vim find & replace
-" ----- Find & replace -----
-
-
-" ------------ NerdTree ------------
-" nnoremap <C-n> :NERDTreeToggle<CR>
-map <silent> <C-n> :NERDTreeToggle<CR>
-
-" Start NERDTree when Vim is started without file arguments. https://github.com/preservim/nerdtree
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists('s:std_in') | NERDTree | endif
-" ------------ NerdTree ------------
-
-
-" UFO folding plugin is another choice. Here I just use the simple indentation method.
-" Shortcuts: zC
-" za toggle
-" zo/zO
-" zM/zR fold/unfold all
-set foldmethod=indent
-set nofoldenable
 
 call plug#begin(stdpath('data') . '/plugged')
 
 
+" Use release branch (recommend)
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
-" Surround around
-Plug 'kylechui/nvim-surround'
-" Php formatter
-" Can use shift + v then =; or press gg=G
-" Translate
-" Plug 'potamides/pantran.nvim'
+Plug 'nvim-treesitter/nvim-treesitter'
 
+" ----- use coc-settings.json
+"  to config languageserver for dart instead ----
+"Plug 'dart-lang/dart-vim-plugin'
+"Plug 'natebosch/vim-lsc'
+"Plug 'natebosch/vim-lsc-dart'
 
-" Folding UFO
-" Plug 'kevinhwang91/promise-async' " must loaded before nvim-ufo
-" Plug 'kevinhwang91/nvim-ufo'
+Plug 'tpope/vim-surround'
 
-" Dracula theme 1:
-" Plug 'dracula/vim', { 'as': 'dracula' }
-" This Dracula theme is better, it supports more plugins:
+" this will auto close ( [ {
+Plug 'jiangmiao/auto-pairs' 
+
+" dracula theme
 Plug 'Mofiqul/dracula.nvim'
-
-" Color in statusline
-Plug 'itchyny/lightline.vim'
-
-" Find and replace far.vim
-Plug 'brooth/far.vim'
-
-" vim-surround
-Plug 'https://github.com/tpope/vim-surround'
-
-
-"NerdTree
-Plug 'https://github.com/preservim/nerdtree' 
-"For Commenting gcc & gc
-Plug 'https://github.com/tpope/vim-commentary' 
-
-" From ------ https://github.com/hrsh7th/nvim-cmp
-Plug 'neovim/nvim-lspconfig'
-Plug 'hrsh7th/cmp-nvim-lsp'
-Plug 'hrsh7th/cmp-buffer'
-Plug 'hrsh7th/cmp-path'
-Plug 'hrsh7th/cmp-cmdline'
-Plug 'hrsh7th/nvim-cmp'
-" End ------ https://github.com/hrsh7th/nvim-cmp
-
-
-" Grammar checkers
-" Plug 'brymer-meneses/grammar-guard.nvim'
-" Plug 'williamboman/nvim-lsp-installer'
-
-" Intro screen
-" Plug 'mhinz/vim-startify'
-
-" Python pep8
-Plug 'tell-k/vim-autopep8'
-
-" Treesitter-based highlighting, after installed, run :TSInstall language
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-
-" Start ------ https://x-team.com/blog/neovim-javascript/amp/
-
-" Auto complete, prettier and tslinting
-Plug 'neoclide/coc.nvim', {'branch': 'master', 'do': 'yarn install --frozen-lockfile'}
-
-" list of CoC extensions needed
-let g:coc_global_extensions = ['coc-tslint-plugin', 'coc-tsserver', 'coc-css', 'coc-html', 'coc-json', 'coc-prettier']
-
-Plug 'jiangmiao/auto-pairs' "this will auto close ( [ {
-
-" End ------ https://x-team.com/blog/neovim-javascript/amp/
 
 call plug#end()
 
-
 colorscheme dracula
 
-" startify screen
-" let g:startify_custom_header = 'startify#pad(startify#fortune#quote())'
 
-" Auto format on save python file
-let g:autopep8_on_save = 1
-let g:autopep8_disable_show_diff = 1
-
-" Auto format on saving php file 
-
-
-" Cursor modes
-let &t_SI = "\<esc>[5 q" " I beam cursor for insert mode
-let &t_SR = "\<esc>[3 q" " underline blinking cursor for replace mode
-let &t_EI = "\<esc>[4 q" " underline cursor for normal mode
-
-" Add Prettier format command
-command! -nargs=0 Prettier :CocCommand prettier.formatFile
-
-
-" From ---- https://github.com/neoclide/coc.nvim
-" Set internal encoding of vim, not needed on neovim, since coc.nvim using some
-" unicode characters in the file autoload/float.vim
-
+" ------  coc.vim readme --------
+" May need for vim (not neovim) since coc.nvim calculate byte offset by count
+" utf-8 byte sequence.
 set encoding=utf-8
-
-" TextEdit might fail if hidden is not set.
-set hidden
-
 " Some servers have issues with backup files, see #649.
 set nobackup
 set nowritebackup
-
-" Give more space for displaying messages.
-set cmdheight=2
 
 " Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
 " delays and poor user experience.
 set updatetime=300
 
-" Don't pass messages to |ins-completion-menu|.
-set shortmess+=c
-
 " Always show the signcolumn, otherwise it would shift the text each time
 " diagnostics appear/become resolved.
-if has("nvim-0.5.0") || has("patch-8.1.1564")
-  " Recently vim can merge signcolumn and number column into one
-  set signcolumn=number
-else
-  set signcolumn=yes
-endif
+set signcolumn=yes
 
 " Use tab for trigger completion with characters ahead and navigate.
+" NOTE: There's always complete item selected by default, you may want to enable
+" no select by `"suggest.noselect": true` in your configuration file.
 " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
 " other plugin before putting this into your config.
 inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#pum#visible() ? coc#pum#next(1) :
+      \ CheckBackspace() ? "\<Tab>" :
       \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
 
-function! s:check_back_space() abort
+" Make <CR> to accept selected completion item or notify coc.nvim to format
+" <C-g>u breaks current undo, please make your own choice.
+inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
+                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
+function! CheckBackspace() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
@@ -243,11 +98,6 @@ if has('nvim')
 else
   inoremap <silent><expr> <c-@> coc#refresh()
 endif
-
-" Make <CR> auto-select the first completion item and notify coc.nvim to
-" format on enter, <cr> could be remapped by other vim plugin
-inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
-                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
 " Use `[g` and `]g` to navigate diagnostics
 " Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
@@ -261,15 +111,13 @@ nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 
 " Use K to show documentation in preview window.
-nnoremap <silent> K :call <SID>show_documentation()<CR>
+nnoremap <silent> K :call ShowDocumentation()<CR>
 
-function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  elseif (coc#rpc#ready())
+function! ShowDocumentation()
+  if CocAction('hasProvider', 'hover')
     call CocActionAsync('doHover')
   else
-    execute '!' . &keywordprg . " " . expand('<cword>')
+    call feedkeys('K', 'in')
   endif
 endfunction
 
@@ -301,6 +149,9 @@ nmap <leader>ac  <Plug>(coc-codeaction)
 " Apply AutoFix to problem on the current line.
 nmap <leader>qf  <Plug>(coc-fix-current)
 
+" Run the Code Lens action on the current line.
+nmap <leader>cl  <Plug>(coc-codelens-action)
+
 " Map function and class text objects
 " NOTE: Requires 'textDocument.documentSymbol' support from the language server.
 xmap if <Plug>(coc-funcobj-i)
@@ -328,13 +179,13 @@ nmap <silent> <C-s> <Plug>(coc-range-select)
 xmap <silent> <C-s> <Plug>(coc-range-select)
 
 " Add `:Format` command to format current buffer.
-command! -nargs=0 Format :call CocAction('format')
+command! -nargs=0 Format :call CocActionAsync('format')
 
 " Add `:Fold` command to fold current buffer.
 command! -nargs=? Fold :call     CocAction('fold', <f-args>)
 
 " Add `:OR` command for organize imports of the current buffer.
-command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
+command! -nargs=0 OR   :call     CocActionAsync('runCommand', 'editor.action.organizeImport')
 
 " Add (Neo)Vim's native statusline support.
 " NOTE: Please see `:h coc-status` for integrations with external plugins that
@@ -359,242 +210,13 @@ nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list.
 nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 
-" pnry change bgclor Termux
-highlight CocFloating ctermbg=8
-
-" add missing import golang :CocInstall coc-go
-
-autocmd BufWritePre *.go :silent call CocAction('runCommand', 'editor.action.organizeImport')
-
-" Launch gopls when Go files are in use
-" let g:LanguageClient_serverCommands = {
-"        \ 'go': ['gopls']
-"        \ }
+" ------  coc.vim readme --------
 
 
 
 
-
-" End ---- https://github.com/neoclide/coc.nvim
-
-
-" ===========
-set completeopt=menu,menuone,noselect
-
-lua <<EOF
-  -- Setup nvim-cmp 
-  local cmp = require'cmp'
-
-  cmp.setup({
-    snippet = {
-      -- REQUIRED - you must specify a snippet engine
-      expand = function(args)
-        vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
-        -- require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
-        -- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
-        -- require'snippy'.expand_snippet(args.body) -- For `snippy` users.
-      end,
-    },
-    mapping = {
-      ['<C-d>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
-      ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
-      ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
-      ['<C-y>'] = cmp.config.disable, -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping.
-      ['<C-e>'] = cmp.mapping({
-        i = cmp.mapping.abort(),
-        c = cmp.mapping.close(),
-      }),
-      ['<CR>'] = cmp.mapping.confirm({ select = true }),
-    },
-    sources = cmp.config.sources({
-      { name = 'nvim_lsp' },
-      { name = 'vsnip' }, -- For vsnip users.
-      -- { name = 'luasnip' }, -- For luasnip users.
-      -- { name = 'ultisnips' }, -- For ultisnips users.
-      -- { name = 'snippy' }, -- For snippy users.
-    }, {
-      { name = 'buffer' },
-    })
-  })
-
-  -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
-  cmp.setup.cmdline('/', {
-    sources = {
-      { name = 'buffer' }
-    }
-  })
-
-  -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
-  cmp.setup.cmdline(':', {
-    sources = cmp.config.sources({
-      { name = 'path' }
-    }, {
-      { name = 'cmdline' }
-    })
-  })
-
-  -- Setup lspconfig.
-  local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
-  
-  -- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
-  
-  -- Enable (broadcasting) snippet capability for completion
-  capabilities.textDocument.completion.completionItem.snippetSupport = true
+" ------------ for Dart ---------
+" check ~/.config/nvim/coc-settings.json
 
 
-  require('lspconfig')['pylsp'].setup {
-    capabilities = capabilities
-  }
-  
-  -- HTML 
-  require('lspconfig')['html'].setup {
-    capabilities = capabilities
-  }
-  require('lspconfig')['cssls'].setup {
-    capabilities = capabilities
-  }
-  
-  -- bashls requires: npm i -g bash-language-server
-  require('lspconfig')['bashls'].setup {
-    capabilities = capabilities
-  }
-
-  
-  -- require('lspconfig')['bashls'].setup{}
-  
-  
-require'nvim-treesitter.configs'.setup {
-  -- A list of parser names, or "all"
-  ensure_installed = { "html", "css", "python", "php", "javascript"},
-
-  -- Install parsers synchronously (only applied to `ensure_installed`)
-  sync_install = false,
-
-  -- List of parsers to ignore installing (for "all")
-  ignore_install = { "dukkha" },
-
-  highlight = {
-    -- `false` will disable the whole extension
-    enable = true,
-
-    -- NOTE: these are the names of the parsers and not the filetype. (for example if you want to
-    -- disable highlighting for the `tex` filetype, you need to include `latex` in this list as this is
-    -- the name of the parser)
-    -- list of language that will be disabled
-    -- disable = { "c", "rust" },
-    disable = { "dukkha", "anicca" },
-
-    -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
-    -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
-    -- Using this option may slow down your editor, and you may see some duplicate highlights.
-    -- Instead of true it can also be a list of languages
-    -- additional_vim_regex_highlighting = false,
-
-	  -- setting it to 'false' caused indentation problems with python, so let it be true
-    additional_vim_regex_highlighting = true,
-  },
-}
-
--- UFO folding: kevinhwang91/nvim-ufo  
--- Can work on Termux too, use 'za' to toggle between
-
-
-
---capabilities.textDocument.foldingRange = {
---    dynamicRegistration = false,
---    lineFoldingOnly = true
---}
---vim.wo.foldcolumn = '1'
---vim.wo.foldlevel = 99 -- feel free to decrease the value
---vim.wo.foldenable = true
---
---require('ufo').setup()
-
--- Surround around ysa 
-require('nvim-surround').setup()
-
-
--- Dracula theme https://github.com/Mofiqul/dracula.nvim
--- customize dracula color palette
-vim.g.dracula_colors = {
-  bg = "#282A36",
-  fg = "#F8F8F2",
-  selection = "#44475A",
-  comment = "#6272A4",
-  red = "#FF5555",
-  orange = "#FFB86C",
-  yellow = "#F1FA8C",
-  green = "#50fa7b",
-  purple = "#BD93F9",
-  cyan = "#8BE9FD",
-  pink = "#FF79C6",
-  bright_red = "#FF6E6E",
-  bright_green = "#69FF94",
-  bright_yellow = "#FFFFA5",
-  bright_blue = "#D6ACFF",
-  bright_magenta = "#FF92DF",
-  bright_cyan = "#A4FFFF",
-  bright_white = "#FFFFFF",
-  menu = "#21222C",
-  visual = "#3E4452",
-  gutter_fg = "#4B5263",
-  nontext = "#3B4048",
-}
--- show the '~' characters after the end of buffers
-vim.g.dracula_show_end_of_buffer = true
--- use transparent background
-vim.g.dracula_transparent_bg = true
--- set custom lualine background color
-vim.g.dracula_lualine_bg_color = "#44475a"
--- set italic comment
-vim.g.dracula_italic_comment = true
-
-
-
-
-
-
-EOF
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-" " English word popup suggestion
-" " -------- modified https://stackoverflow.com/a/41432390
-" set dictionary+=~/.config/dictionary/british-english-large
-
-" set completeopt+=noinsert
-" set cmdheight=2
-" " call SuperTabSetDefaultCompletionType("<c-x><c-n>")
-" " NeoCompleteDisable
-
-" augroup Main
-" autocmd!
-" autocmd InsertCharPre * call <SID>PopUpDict()
-" augroup END
-
-" let s:count=0
-" function! s:PopUpDict()
-"     let AsciiCode=char2nr(v:char)
-"     if (AsciiCode <=# 122 && AsciiCode >=# 97) || (AsciiCode <=# 90 && AsciiCode >=# 65)  
-"         let s:count+=1
-"         if s:count >=# 3
-"         call feedkeys("\<c-x>\<c-k>")   
-"         endif
-"     else
-"         let s:count=0
-"     endif
-" endfunction
-" " -------- https://stackoverflow.com/a/41432390
 
