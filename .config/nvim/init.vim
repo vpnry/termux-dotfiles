@@ -36,9 +36,11 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 Plug 'nvim-treesitter/nvim-treesitter'
 
-" ----- use coc-settings.json
+" Provide highlight & indent
+Plug 'dart-lang/dart-vim-plugin'
+
+"----- use coc-settings.json
 "  to config languageserver for dart instead ----
-"Plug 'dart-lang/dart-vim-plugin'
 "Plug 'natebosch/vim-lsc'
 "Plug 'natebosch/vim-lsc-dart'
 
@@ -52,7 +54,7 @@ Plug 'Mofiqul/dracula.nvim'
 
 call plug#end()
 
-colorscheme dracula
+" colorscheme dracula
 
 
 " ------  coc.vim readme --------
